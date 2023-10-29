@@ -19,9 +19,9 @@ def main():
         initial_sidebar_state="expanded",
     )
 
-    st.title("DataWiz - Dashboard Hub")
+    st.title("DataWiz")
 
-    st.sidebar.title("Dashboards")
+    st.sidebar.title("Dashboards Hub")
 
     # Create an expander for Dashboards
     with st.sidebar.expander("Select Dashboard"):

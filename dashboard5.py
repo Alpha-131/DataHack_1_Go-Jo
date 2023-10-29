@@ -1,4 +1,3 @@
-# dashboard6.py
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -15,8 +14,8 @@ def main():
     num_startups_by_year = df_startup['Year'].value_counts().sort_index()
 
     # Sidebar with user input for selecting a range of years
-    st.sidebar.header("Select Year Range")
-    selected_years = st.sidebar.slider("Select Year Range", min_value=int(num_startups_by_year.index.min()), max_value=int(num_startups_by_year.index.max()), value=(2018, 2021))
+    st.header("Select Year Range")
+    selected_years = st.slider("Select Year Range", min_value=int(num_startups_by_year.index.min()), max_value=int(num_startups_by_year.index.max()), value=(2018, 2021))
 
     # Filter data based on the selected year range
     filtered_startups = num_startups_by_year.loc[selected_years[0]:selected_years[1]]
@@ -56,12 +55,12 @@ def main():
     st.plotly_chart(fig)
 
     # Additional interactivity
-    st.sidebar.header("Additional Options")
+    st.header("Additional Options")
 
     # Option for summary statistics
-    st.sidebar.header("Summary Statistics")
-    st.sidebar.write(f"Total number of years: {len(num_startups_by_year)}")
-    st.sidebar.write(f"Average startups per year: {num_startups_by_year.mean():.2f}")
+    st.header("Summary Statistics")
+    st.write(f"Total number of years: {len(num_startups_by_year)}")
+    st.write(f"Average startups per year: {num_startups_by_year.mean():.2f}")
 
 if __name__ == "__main__":
     main()

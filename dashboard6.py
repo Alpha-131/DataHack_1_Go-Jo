@@ -31,18 +31,11 @@ def main():
         hover_name=top20.index,  # Show region names on hover
     )
 
-    # # Customize layout for the plot
-    # fig.update_layout(
-    #     xaxis_title='Region',
-    #     yaxis_title='Size of bubble represents total funding amount ($ Billions)',
-    #     xaxis=dict(tickangle=45),
-    # )
-    
+    # Customize layout for the plot
     fig.update_layout(
-    height=600,  # Adjust the height
-    width=800,   # Adjust the width
+        height=600,  # Adjust the height
+        width=800,   # Adjust the width
     )
-
 
     # Display the interactive plot
     st.plotly_chart(fig)
@@ -66,6 +59,29 @@ def main():
             showlegend=False,
         )
     )
+
+    # Create a scatter plot for city vs amount
+    fig_city = px.scatter(
+        df_startup[df_startup['HeadQuarter'] == selected_region],
+        x='Company/Brand',
+        y='Amount($)',
+        title=f'Total Funding Received by Startups in {selected_region}',
+        labels={'Amount($)': 'Funding Amount ($ Billions)'},
+        template='plotly_dark',
+        color='Amount($)',  # Color points by funding amount
+        hover_name='Company/Brand',  # Show startup names on hover
+    )
+
+    # Customize layout for the city vs amount plot
+    fig_city.update_layout(
+        height=600,
+        width=800,
+        xaxis_title='Startup',
+        yaxis_title='Funding Amount ($ Billions)',
+    )
+
+    # Display the city vs amount plot
+    st.plotly_chart(fig_city)
 
     # Option for summary statistics
     st.markdown("## Summary Statistics")

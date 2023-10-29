@@ -1,4 +1,3 @@
-# dashboard5.py
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -45,16 +44,15 @@ def main():
     st.plotly_chart(fig)
 
     # Additional interactivity
-    st.sidebar.header("Additional Options")
+    st.container()
 
     # Option to show raw data
-    if st.sidebar.checkbox("Show Raw Data"):
+    if st.checkbox("Show Raw Data"):
         st.subheader("Raw Funding Data")
         st.dataframe(df_startup)
 
     # Option for interactive summary statistics
-    st.sidebar.header("Interactive Summary Statistics")
-    selected_year = st.sidebar.selectbox("Select a Year", df_funding_by_year['Year'].dt.year.unique())
+    selected_year = st.selectbox("Select a Year", df_funding_by_year['Year'].dt.year.unique())
     year_summary = df_startup[df_startup['Year'].dt.year == selected_year]['Amount($)'].describe()
     
     st.subheader(f"Summary Statistics for {selected_year}")

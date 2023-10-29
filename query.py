@@ -22,18 +22,6 @@ def display_data_and_response(data, question):
     chatbot_reply = data.chat(question)
     print(chatbot_reply)
 
-    # Check if chatbot_reply is a dictionary
-    # if isinstance(chatbot_reply, dict):
-    #     # Check if "type" is in the dictionary
-    #     if "type" in chatbot_reply:
-    #         # If chatbot_reply["type"] is None or empty, assign a default value of no answer
-    #         response_type = chatbot_reply["type"] or "Answer not found. Sorry!"
-    #         st.markdown(f"_{response_type}_")
-    #     else:
-    #         st.markdown("_Answer not found. Sorry!_")
-    # else:
-    #     st.markdown("_Answer not found. Sorry!_")
-
     # Display chatbot reply in Streamlit
     st.write("Chatbot Reply:", chatbot_reply)
 
@@ -46,9 +34,12 @@ def query():
     df = pd.read_csv(file_path)
     df_startup = SmartDataframe(df, config={"llm": llm})
 
-    # Display the first few rows of the data and chatbot response
+    # Display the first few rows of the data
+    st.subheader("Preview of the Data:")
+    st.dataframe(df.head(5))
+
+    # Allow user to interact with the chatbot
     user_input = st.text_input("You:", "")
-    # user_input = st.text_input("You:", "")
     if user_input:
         display_data_and_response(df_startup, user_input)
 
