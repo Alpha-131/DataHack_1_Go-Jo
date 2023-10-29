@@ -4,3 +4,4 @@ streamlit==1.8.0
 numpy==1.21.2  # (or the version you're using)
 pandasai 
 python-dotenv
+astor
