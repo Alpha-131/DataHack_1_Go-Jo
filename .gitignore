@@ -1,8 +1,6 @@
 __pycache__/
 .ipynb_checkpoints/
 cache/
-.env
-Untitled.ipynb
 tmp/
-dashboard_TEMP.py
 *.log
+.env
