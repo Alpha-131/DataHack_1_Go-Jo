@@ -1,40 +1,30 @@
 import streamlit as st
 import pandas as pd
 import os
-from pandasai import PandasAI
-from pandasai.llm import GooglePalm  # Import GooglePalm
+from pandasai.llm import GooglePalm  
 from pandasai import SmartDataframe
 from dotenv import load_dotenv
 
-# Load Google Palm API key from .env file
 load_dotenv()
 google_palm_api_key = os.getenv("GOOGLE_PALM_API_KEY")
-
-# Instantiate LLM and PandasAI objects using GooglePalm
 llm = GooglePalm(api_key=google_palm_api_key)
+
+# Function to interact with the chatbot and get response
+def get_chatbot_response(data, question):
+    return data.chat(question)
 
 # Function to display data and chatbot response
 def display_data_and_response(data, question):
     st.subheader("Preview of the Data:")
     st.dataframe(data.head(5))
-
     st.subheader("Chatbot Response:")
-    chatbot_reply = data.chat(question)
-    print(chatbot_reply)
-
-    # Check if chatbot_reply is a dictionary
-    # if isinstance(chatbot_reply, dict):
-    #     # Check if "type" is in the dictionary
-    #     if "type" in chatbot_reply:
-    #         # If chatbot_reply["type"] is None or empty, assign a default value of no answer
-    #         response_type = chatbot_reply["type"] or "Answer not found. Sorry!"
-    #         st.markdown(f"_{response_type}_")
-    #     else:
-    #         st.markdown("_Answer not found. Sorry!_")
-    # else:
-    #     st.markdown("_Answer not found. Sorry!_")
+    
+    # print("Question:", question)
+    chatbot_reply = get_chatbot_response(data, question)
+    # print("Chatbot Reply:", chatbot_reply)
 
     # Display chatbot reply in Streamlit
+    st.write("You asked:", question)
     st.write("Chatbot Reply:", chatbot_reply)
 
 # Main function
@@ -46,15 +36,15 @@ def query():
     df = pd.read_csv(file_path)
     df_startup = SmartDataframe(df, config={"llm": llm})
 
-    # Display the first few rows of the data and chatbot response
-    user_input = st.text_input("You:", "")
-    # user_input = st.text_input("You:", "")
-    if user_input:
-        display_data_and_response(df_startup, user_input)
+    # having trouble with submit button and changing user input after initial input
+    with st.form(key='my_form'):
+        user_input = st.text_input("You:", "Name of companies who have HeadQuarter at Mumbai and are formed on Year 2018")
+        st.form_submit_button("Ask Chatbot")
 
-        # Add a button to trigger the chatbot
-        if st.button("Ask Chatbot"):
-            display_data_and_response(df_startup, user_input)  # Use user's question
+        # Display the first few rows of the data and chatbot response
+        if user_input:
+            display_data_and_response(df_startup, user_input)
+
 
 if __name__ == "__main__":
     query()

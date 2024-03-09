@@ -5,10 +5,26 @@ from dashboard3 import main as dashboard3
 from dashboard4 import main as dashboard4
 from dashboard5 import main as dashboard5
 from dashboard6 import main as dashboard6
-from question1 import main as question1
-# from question2 import main as question2
-# from question3 import main as question3
+# from question1 import main as question1
 from query import query
+
+
+# remaining - conclusion page that answers different questions.
+dashboard_options = {
+    "Startup Funding Insights": "Number of startups that appear for different types of funding rounds",
+    "Top Funding Amounts": "List of companies ranked according to amount of funding recieved",
+    "Top Investors and Sectors by Total Funding Amount": "Sectors and investors classified by total funding amount",
+    "Funding Trend Over the Years": "Description for Funding Trend Over the Years",
+    "Number of New Startups Formed Each Year": "Description for Number of New Startups Formed Each Year",
+    "Total Funding in each region": "Description for Total Funding in each region",
+}
+
+question_options = {
+    "What are the top 10 startups in terms of revenue over the last 5 years",
+    "Give a location-wise distribution of the top 100 startups",
+    "How did Covid affect funding for startups across different sectors"
+}
+
 
 def main():
     st.set_page_config(
@@ -30,7 +46,7 @@ def main():
                            "Funding Trend Over the Years",
                            "Number of New Startups Formed Each Year",
                            "Total Funding in each region"],
-            "Questions": ["Question 1", "Question 2", "Question 3"],
+            "Conclusions": ["Question 1", "Question 2", "Question 3"],
         }
 
         selected_section = st.radio("Go to", list(section_options.keys()))
@@ -38,7 +54,7 @@ def main():
         if selected_section == "Dashboards":
             selected_dashboard = st.selectbox("Select Dashboard", section_options[selected_section])
             st.write(f"**Dashboard Description:** {dashboard_options[selected_dashboard]}")
-        elif selected_section == "Questions":
+        elif selected_section == "Conclusions":
             selected_question = st.selectbox("Select Question", section_options[selected_section])
             st.write(f"**Question Description:** {question_options[selected_question]}")
 
@@ -60,9 +76,10 @@ def main():
                 dashboard5()
             elif selected_dashboard == "Total Funding in each region":
                 dashboard6()
-        elif selected_section == "Questions":
+        elif selected_section == "Conclusions":
             if selected_question == "Question 1":
-                question1()
+                pass
+                # question1()
             # elif selected_question == "Question 2":
             #     question2()
             # elif selected_question == "Question 3":
